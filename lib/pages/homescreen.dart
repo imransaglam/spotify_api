@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../provider/category_provider.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -12,6 +15,19 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  @override
+     CategoryProvider ?cateProvider;
+  void initState(){
+     
+  
+    cateProvider=Provider.of<CategoryProvider>(context,listen:false);
+      cateProvider!.getCategoryData(context);
+
+    
+      super.initState();
+      
+
+    }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +40,7 @@ class _HomescreenState extends State<Homescreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Ara",style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
-                Divider(),
+                SizedBox(height: 10,),
                  SizedBox(
                   height: 50,
                    child: TextField(
@@ -41,32 +57,48 @@ class _HomescreenState extends State<Homescreen> {
                     ),
                                ),
                  ),
-                 Divider(),
+                SizedBox(height: 10,),
                  Center(child: Text("Hepsine göz at",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
-                 Divider(),
-                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  //height: MediaQuery.of(context).size.height,
-                   child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 3/2,
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                   ), 
-                   physics: NeverScrollableScrollPhysics(),
-                   shrinkWrap: true,
-                   itemCount: 25,
-                   itemBuilder: (context, index) {
-                     return Container(
-                                 height: 80,
-                                 width: 80,
-                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.green
-                                 ),
-                     );
-                   },),
-                 )
+                SizedBox(height: 10,),
+
+
+
+                 Consumer(
+                  builder: (context, CategoryProvider categoryProvider, child) =>categoryProvider?.isLoading==true?CircularProgressIndicator(): 
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    //height: MediaQuery.of(context).size.height,
+                     child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 3/2,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                     ), 
+                     physics: NeverScrollableScrollPhysics(),
+                     shrinkWrap: true,
+                     itemCount: categoryProvider.response.categories!.items!.length,
+                     itemBuilder: (context, index) {
+                       return Container(
+                                   height: 80,
+                                   width: 80,
+                                  decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:  NetworkImage(categoryProvider.response.categories!.items![index].icons![0].url.toString()),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                                   child: Container(alignment: Alignment.bottomCenter,
+                                    child: Text(categoryProvider.response.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
+                       );
+                     },),
+                   ),
+                 ),
+                 
+             
+
+
+
+
                  
               ],
             ),

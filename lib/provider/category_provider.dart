@@ -1,14 +1,19 @@
 import 'package:flutter/cupertino.dart';
-import 'package:spotifyapi/models/items.dart';
+import 'package:spotifyapi/models/categories_response.dart';
+import 'package:spotifyapi/services/apiservices.dart';
 
 class CategoryProvider with ChangeNotifier{
-  Items response=Items();
-  bool isLoading=true;
-  getCategoryData(context) async{
+  CategoriesResponse response= CategoriesResponse();
+  bool isLoading=false;
+
+
+
+  getCategoryData(context) async {
     isLoading=true;
-    response=(await getCategoryData(context))!;
+    response=(await getCurrentData())!;
     //print(response.name);
     isLoading=false;
     notifyListeners();
   }
+
 }
