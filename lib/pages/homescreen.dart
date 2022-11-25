@@ -32,7 +32,7 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(right: 15,left: 15,top:20),
@@ -49,7 +49,8 @@ class _HomescreenState extends State<Homescreen> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none
+                        borderSide: BorderSide(color: Colors.black),
+                        
                       ),
                       hintText: "Ne dinlemek istiyorsun?",
                       prefixIcon: Icon(Icons.search),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:spotifyapi/pages/details.dart';
+import 'package:spotifyapi/pages/discovery.dart';
 import 'package:spotifyapi/pages/homescreen.dart';
+import 'package:spotifyapi/pages/profile.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -100,16 +102,16 @@ class _NavbarState extends State<Navbar> {
   Widget Pages() {
     switch (_currentIndex) {
       case 0:
-        return Homescreen();
+        return DiscoveryScreen();
         break;
       case 1:
-        return DetailsScreen();
+        return Homescreen();
         break;
       case 2:
-        return Homescreen();
+        return DetailsScreen();
         break;
       case 3:
-        return Homescreen();
+        return ProfileScreen();
         break;
       default:
         return Container();
