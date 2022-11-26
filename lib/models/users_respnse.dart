@@ -2,7 +2,7 @@ class UserResponse {
   String? href;
   List<Items>? items;
   int? limit;
-  String? next;
+  Null? next;
   int? offset;
   String? previous;
   int? total;

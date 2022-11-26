@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-import 'package:spotifyapi/provider/profil_provider.dart';
-import 'package:spotifyapi/provider/user_provider.dart';
+
+import 'package:spotifyapi/provider/spotify_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,14 +14,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
-  UserProvider? usProvider;
-  ProfileProvider? profProvider;
-  void initState() {
-    usProvider = Provider.of<UserProvider>(context, listen: false);
-    usProvider!.getUserData(context);
-     profProvider = Provider.of<ProfileProvider>(context, listen: false);
-    profProvider!.getProfilData(context);
+  SpotifyProvider? spotProvider;
 
+  void initState() {
+    spotProvider = Provider.of<SpotifyProvider>(context, listen: false);
+    spotProvider?.getProfileData(context);
+    spotProvider?.getUserData(context);
     super.initState();
   }
 
@@ -71,64 +69,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
                       child: Consumer(
-                         builder: (context, ProfileProvider profileProvider, child) =>profileProvider?.isLoading==true?CircularProgressIndicator():
-                        Container(
+                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                         Container(
                           width: 93,
                           height: 93,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(profileProvider.response.images![0].url.toString()),
+                                  image: NetworkImage(profileProvider.profileResponse.images![0].url.toString()),
                                   fit: BoxFit.cover),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(56),
-                                bottomRight: Radius.circular(56),
+                              borderRadius: BorderRadius.circular(46.5
                               )),
                         ),
                       ),
                     ),
-                    Text("soroushnrorozyui@gmail.com",
-                        style: TextStyle(
-                            color: Color(0xff222222),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400)),
+                    Consumer(
+                      builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                     Text(profileProvider.profileResponse.type.toString(),
+                          style: TextStyle(
+                              color: Color(0xff222222),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400)),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      child: Text("Soroushnrz",
+                      child: Consumer(
+                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                       Text(profileProvider.profileResponse.displayName.toString(),
+                            style: TextStyle(
+                                color: Color(0xff222222),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                    Consumer(
+                       builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                      Text(profileProvider.profileResponse.followers!.total.toString(),
                           style: TextStyle(
                               color: Color(0xff222222),
                               fontSize: 20,
                               fontWeight: FontWeight.bold)),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("243",
-                            style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold)),
-                        Text("188",
-                            style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold))
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Followers",
-                            style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400)),
-                        Text("Follows",
-                            style: TextStyle(
-                                color: Color(0xff222222),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400))
-                      ],
-                    )
+                    Text("Follows",
+                        style: TextStyle(
+                            color: Color(0xff222222),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400))
                   ],
                 ),
               ),
@@ -144,54 +129,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 15),
                 child: Consumer(
-                  builder: (context, UserProvider userProvider, child) =>
-                      userProvider?.isLoading == true
-                          ? CircularProgressIndicator()
-                          : Container(
-                          
+                  builder:(context, SpotifyProvider userProvider, child) =>userProvider.isLoading==true?CircularProgressIndicator():
+                   Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
                               child: ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount:
-                                      userProvider.response.items!.length,
+                                      userProvider.userResponse.items?.length,
                                   scrollDirection: Axis.vertical,
                                   itemBuilder: ((context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 20, bottom: 20),
                                       child: Container(
-                                        
                                         child: ListTile(
                                           leading: Container(
                                             width: 60,
                                             height: 60,
                                             decoration: BoxDecoration(
                                                 image: DecorationImage(
-                                                  image: NetworkImage(userProvider
-                                                          .response
-                                                          .items![index]
-                                                          .images!
-                                                          .isEmpty
-                                                      ? "https://play-lh.googleusercontent.com/WB0j9PZGUofgwNbJ8Jm0-v03FIwBMj5Ovi5eso8xaBVTh6FGOyc4xyNjwMkTziKgkBs"
-                                                      : userProvider
-                                                          .response
-                                                          .items![index]
-                                                          .images![0]
-                                                          .url
-                                                          .toString()),
+                                                  image: NetworkImage(
+                                                    userProvider.userResponse.items![index].images!.isEmpty?
+                                                      "https://play-lh.googleusercontent.com/WB0j9PZGUofgwNbJ8Jm0-v03FIwBMj5Ovi5eso8xaBVTh6FGOyc4xyNjwMkTziKgkBs"
+                                                      :userProvider.userResponse.items![index].images![0].url.toString()
+                                                      ),
                                                   fit: BoxFit.cover,
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(14)),
                                           ),
                                           title: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                userProvider
-                                                    .response.items![index].name
-                                                    .toString(),
+                                                userProvider.userResponse.items![index].name.toString(),
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
@@ -199,12 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                userProvider
-                                                    .response
-                                                    .items![index]
-                                                    .owner!
-                                                    .displayName
-                                                    .toString(),
+                                                userProvider.userResponse.items![index].owner!.displayName.toString(),
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 12,
@@ -220,58 +188,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                       ),
-                                      // Container(
-                                      //   height: 50,
-                                      //   child: Row(
-                                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      //     children: [
-                                      //     Container(
-                                      //     width: 56,
-                                      //     height: 56,
-                                      //     decoration: BoxDecoration(
-                                      //         image: DecorationImage(
-                                      //           image:NetworkImage(userProvider.response.items![index].images!.isEmpty?"https://play-lh.googleusercontent.com/WB0j9PZGUofgwNbJ8Jm0-v03FIwBMj5Ovi5eso8xaBVTh6FGOyc4xyNjwMkTziKgkBs":  userProvider.response.items![index].images![0].url.toString()),
-                                      //           fit: BoxFit.cover,
-                                      //         ),
-                                      //         borderRadius: BorderRadius.circular(14)
-                                      //         ),
-                                      //   ),
-                                      //       Column(
-                                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                                      //         children: [
-                                      //           Text(
-
-                                      //             userProvider.response.items![index].name.toString(),
-                                      //             style: TextStyle(
-                                      //                 color: Colors.black,
-                                      //                 fontSize: 16,
-                                      //                 fontWeight: FontWeight.bold),
-                                      //           ),
-                                      //           Text(
-                                      //             userProvider.response.items![index].owner!.displayName.toString(),
-                                      //             style: TextStyle(
-
-                                      //                 color: Colors.black,
-                                      //                 fontSize: 12,
-                                      //                 fontWeight: FontWeight.w400),
-                                      //           )
-                                      //         ],
-                                      //       ),
-                                      //       // Text(
-                                      //       //   "5:33",
-                                      //       //   style: TextStyle(
-                                      //       //       color: Colors.black,
-                                      //       //       fontSize: 15,
-                                      //       //       fontWeight: FontWeight.w400),
-                                      //       // ),
-                                      //       Icon(
-                                      //         Icons.more_horiz_rounded,
-                                      //         size: 30,
-                                      //         color: Color(0xffA68C8C),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // )
                                     );
                                   })),
                             ),

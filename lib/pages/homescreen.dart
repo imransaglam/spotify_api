@@ -4,8 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:spotifyapi/provider/spotify_provider.dart';
 
-import '../provider/category_provider.dart';
+
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -16,11 +17,11 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   @override
-     CategoryProvider ?cateProvider;
+     SpotifyProvider ?cateProvider;
   void initState(){
      
   
-    cateProvider=Provider.of<CategoryProvider>(context,listen:false);
+    cateProvider=Provider.of<SpotifyProvider>(context,listen:false);
       cateProvider!.getCategoryData(context);
 
     
@@ -65,7 +66,7 @@ class _HomescreenState extends State<Homescreen> {
 
 
                  Consumer(
-                  builder: (context, CategoryProvider categoryProvider, child) =>categoryProvider?.isLoading==true?CircularProgressIndicator(): 
+                  builder: (context, SpotifyProvider categoryProvider, child) =>categoryProvider.isLoading==true?CircularProgressIndicator(): 
                   Container(
                     width: MediaQuery.of(context).size.width,
                     //height: MediaQuery.of(context).size.height,
@@ -77,19 +78,19 @@ class _HomescreenState extends State<Homescreen> {
                      ), 
                      physics: NeverScrollableScrollPhysics(),
                      shrinkWrap: true,
-                     itemCount: categoryProvider.response.categories!.items!.length,
+                     itemCount: categoryProvider.categoryResponse.categories!.items!.length,
                      itemBuilder: (context, index) {
                        return Container(
                                    height: 80,
                                    width: 80,
                                   decoration: BoxDecoration(
                         image: DecorationImage(
-                          image:  NetworkImage(categoryProvider.response.categories!.items![index].icons![0].url.toString()),
+                          image:  NetworkImage(categoryProvider.categoryResponse.categories!.items![index].icons![0].url.toString()),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(10)),
                                    child: Container(alignment: Alignment.bottomCenter,
-                                    child: Text(categoryProvider.response.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
+                                    child: Text(categoryProvider.categoryResponse.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
                        );
                      },),
                    ),

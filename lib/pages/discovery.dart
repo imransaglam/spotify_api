@@ -10,6 +10,7 @@ class DiscoveryScreen extends StatefulWidget {
 }
 
 class _DiscoveryScreenState extends State<DiscoveryScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                           ),
                        ),
                       Positioned(
-                        right: 15,bottom: 0,
+                        right: 22,bottom: 2,
                         child: Container(
                           width: 325,
                           height: 193,

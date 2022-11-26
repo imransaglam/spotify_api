@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:spotifyapi/pages/homescreen.dart';
 
-import '../provider/user_provider.dart';
+import '../provider/spotify_provider.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({super.key});
