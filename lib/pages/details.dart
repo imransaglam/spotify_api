@@ -20,6 +20,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     artistalbProvider=Provider.of<SpotifyProvider>(context,listen:false);
       artistalbProvider!.getArtistAlbumData(context);
       artistalbProvider!.getArtistData(context);
+      artistalbProvider!.getArtistSongData(context);
       super.initState();
     }
   @override
@@ -86,25 +87,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       )),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("2 Album",
-                      style: TextStyle(
-                          color: Color(0xff393939),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400)),
-                  Text(" , ",
-                      style: TextStyle(
-                          color: Color(0xff393939),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400)),
-                  Text("67 Track",
-                      style: TextStyle(
-                          color: Color(0xff393939),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400)),
-                ],
+              Consumer(
+                builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${artistProvider.artistResponse.followers!.total.toString()} Followers" ,
+                        style: TextStyle(
+                            color: Color(0xff393939),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400)),
+                    Text(" , ",
+                        style: TextStyle(
+                            color: Color(0xff393939),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400)),
+                    Text("${artistProvider.artistResponse.popularity.toString()} Popularities" ,
+                        style: TextStyle(
+                            color: Color(0xff393939),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400)),
+                  ],
+                ),
               ),
               Padding(
                   padding: const EdgeInsets.only(
@@ -168,7 +172,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   width: 460,
                   height: 200,
                   child: ListView.builder(
-                      itemCount: artistalbProvider!.artistAlbumResponse.items!.length,
+                      itemCount: artistAlbumProvider.artistAlbumResponse.items!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) {
                         return Padding(
@@ -226,62 +230,75 @@ class _DetailsScreenState extends State<DetailsScreen> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                width: 460,
-                height: 200,
-                child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: ((context, index) {
-                      return Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, bottom: 20),
-                          child: Container(
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.play_circle_filled_rounded,
-                                  size: 45,
-                                  color: Color(0xffE6E6E6),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Don't Smile At Me",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "Billie Eilish",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    )
-                                  ],
-                                ),
-                                Text(
-                                  "5:33",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                Icon(
-                                  Icons.favorite_outline_rounded,
-                                  size: 30,
-                                  color: Color(0xffE6E6E6),
-                                )
-                              ],
-                            ),
-                          ));
-                    })),
+              Consumer(
+           builder: (context, SpotifyProvider artistSongsProvider, child) =>artistSongsProvider.isLoading==true?CircularProgressIndicator():
+                 Container(
+                  width:MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: artistSongsProvider.artistSongResponse.tracks!.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Container(
+                              height: 60,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.play_circle_filled_rounded,
+                                    size: 45,
+                                    color: Color(0xffE6E6E6),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        child: Text(
+                                          artistSongsProvider.artistSongResponse.tracks![index].album!.name.toString(),
+                                         overflow: TextOverflow.ellipsis,
+                                         maxLines: 2,
+                                         style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 150,
+                                        child: Text(
+                                          artistSongsProvider.artistSongResponse.tracks![index].artists![0].name.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                         maxLines: 1,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    artistSongsProvider.artistSongResponse.tracks![index].durationMs.toString(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_outline_rounded,
+                                    size: 30,
+                                    color: Color(0xffE6E6E6),
+                                  )
+                                ],
+                              ),
+                            ));
+                      })),
+                               ),
               ),
             ],
           ),

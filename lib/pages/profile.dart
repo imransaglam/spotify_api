@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:spotifyapi/pages/details.dart';
 
 import 'package:spotifyapi/provider/spotify_provider.dart';
 
@@ -48,9 +49,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Color(0xff545454),
+                          GestureDetector(
+                            onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen()));
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Color(0xff545454),
+                            ),
                           ),
                           Text(
                             "Profile",

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:spotifyapi/models/artist_album_response.dart';
 import 'package:spotifyapi/models/artist_response.dart';
+import 'package:spotifyapi/models/artist_song_response.dart';
 
 import 'package:spotifyapi/models/profils_response.dart';
 import 'package:spotifyapi/models/users_respnse.dart';
@@ -9,12 +10,34 @@ import 'package:spotifyapi/models/users_respnse.dart';
 
 import '../models/categories_response.dart';
 
+final Dio _dio6 = Dio(BaseOptions(
+  baseUrl: "https://api.spotify.com/v1/",
+  headers: {
+    "Authorization":
+        "Bearer BQAotuYWhLYNVWTvqc5fbBhv37Y-i8Bp-heLAlhGuA4SLJQjrTiIjuClO7rPterApqkfKOiBv_qi-tKnlBi-gu1VEBkxEzRwoWkMLm0X9rQ2aq5-0hjHDCU0pYXETBZj1Hiw6IJz1gyoDUEK0a02OmKCI-SJA5M6PkQdPkQRUqvjVa6GBfp3iAZ4RKtWQ_jj_fhbkqOTUtmosnH1tKmn54QIMlBY0fUsGLaF0klq3C4nUUjiJBkRW-JBgqF5sZEDbHCHUKMNbV2KpL22UoOrc3TZoey0SZrYU3MkOOkgoApi"
+  },
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<ArtistSongResponse?> getCurrentArtistSongData() async {
+  ArtistSongResponse artistSongResponse;
+  try {
+    final response = await _dio6
+        .get("artists/0TnOYISbd1XYRBk9myaseg/top-tracks?market=TR");
+    artistSongResponse = ArtistSongResponse.fromJson(response.data);
+
+    return artistSongResponse;
+  } catch (e) {}
+
+}
+
+
 
 final Dio _dio5 = Dio(BaseOptions(
   baseUrl: "https://api.spotify.com/v1/",
   headers: {
     "Authorization":
-        "Bearer BQA6IMI2srPugPd5UgBSGwhEx8IUn-rA2k9CzqyrexD7cX1bFug9Xz5njAPa3GNRYy_b5c55jk3XDJkELsGPZkAhf8Wk8g8J7l1Dtx4NjNco1lF98GIyPjIxvLjpa6syPNL0AZd-vQ2NN4__y9h2NPGofIXnN5bgPGOKGuxXYw7r4jsgaWnlJmzI5mxpJQK7g3WElKgCSSUKc-KkdYJVUPuX9xmRt16lM-asWff8nOHyYgQCJl50hLqAjJY97kKHafsfcvn_Kwe9nKDIQydSEOh746tYMce9lCrPtfsxFEEY"
+        "Bearer BQCpYPAAVnmgijs18N0qj9kgLcbC1wB-VfQdrKB5nTo_keGG-PeVu-9A6v6ctVMwRXPkJRXJLaswypnqYRGQm6bBxQgOpM0HTbRHGGn1Ef_J4wjEvBRH0r_ZdgFRoq0bVsv0qcwlXoD-3qDiFhzyd_ah_HfjrW1Jh9uqw7VFGmJkyXSqvaw9m0Mwrrel10xNfM2kmzYGytVAGNCdGU8evh_A4qVt4NJzIG7xoD9tqD-jZ6C6QMmYw5nCthj3v0NWj2nEASeGk4T4uXODWvZpDeX87As_TRe1HZlFYLzy7rIa"
   },
   connectTimeout: 5000,
   receiveTimeout: 3000,
@@ -36,7 +59,7 @@ final Dio _dio4 = Dio(BaseOptions(
   baseUrl: "https://api.spotify.com/v1/",
   headers: {
     "Authorization":
-        "Bearer BQCck9F4eh7-dGh7KQOCgtjagwHuQgzBs4bS4DbSyQh8cCB9XGwdIJcLXfC9o2U_CS3xEmH9eggogKYFamXxdGHQDjHp3asmAAK24ZWJmLbbKdya20v18o3NQMJfRtFz3K7XeK-bMDvCdVV5zBuirNX_kU_HRQZKS64TVVZLd_mJy9tx0rJNrWmoWSlUG4arZZawYMPAhuEpS1elo9-YYnawWqJk_7KsvyryU-ON2S0z5VuZPH4h8Z_Y5Il7evLih8o6ElHvAnbOeti09Ub7VromnWKLDAOkvbVMcC_-UmCS"
+        "  Bearer BQBRlNr9okctF2_N7ywvxaqmkwr3ph8rAj2GNkKGK8_5w_CqkDeQmUzJog25jdbpZwKMoG4PFhFFM0oN5u3N4bAARyGgO2NWVapgJvwzWuB1rI9W69lHaMrFDZQdPp5yo56XaB2INm5KfQDNyxBgO7HenDL5PVIL0QYy6_9iInMueYVyU_Nl3-ZC7rzzndNC-ilkH6c65zxVUbklXwTNKIoSidr4YcItC-K1Y49TEEGYKHbv3FsYsm4y71D17T0p8ekqb2wouAsRGvetFB8M9w3Rm9t8a_tDO6WZCXJN7RWV"
   },
   connectTimeout: 5000,
   receiveTimeout: 3000,
