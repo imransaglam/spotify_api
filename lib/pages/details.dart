@@ -14,7 +14,14 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  
+    @override
+     SpotifyProvider ?artistalbProvider;
+  void initState(){
+    artistalbProvider=Provider.of<SpotifyProvider>(context,listen:false);
+      artistalbProvider!.getArtistAlbumData(context);
+      artistalbProvider!.getArtistData(context);
+      super.initState();
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,18 +32,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
             children: [
               Stack(
                 children: [
-                  Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/Rectangle15.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(69),
-                          bottomRight: Radius.circular(69),
-                        )),
+                  Consumer(
+                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                     Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(artistProvider.artistResponse.images![0].url.toString()),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(69),
+                            bottomRight: Radius.circular(69),
+                          )),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30,left: 15,right: 15),
@@ -63,15 +73,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
-                child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Billie Eilish",
-                      style: TextStyle(
-                          color: Color(0xff222222),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
+                child: Consumer(
+                  builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                 Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                           artistProvider.artistResponse.name.toString(),
+                        style: TextStyle(
+                            color: Color(0xff222222),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,15 +109,45 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Padding(
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 60, right: 60),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                        "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.Turpis Adipiscing Vestibulum Orci Enim.Nascetur Vitae",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Color(0xff838383),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400)),
+                  child: Consumer(
+                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                     Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${artistProvider.artistResponse.genres![0].toString()} , ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color(0xff838383),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400)),
+                                 Text(
+                            "${artistProvider.artistResponse.genres![1].toString()} , ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color(0xff838383),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400)),
+                                 Text(
+                            "${artistProvider.artistResponse.genres![2].toString()} , ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color(0xff838383),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400)),
+                                 Text(
+                            "${artistProvider.artistResponse.genres![3].toString()} .",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color(0xff838383),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400)),
+                                
+                                ],
+                      ),
+                    ),
                   )),
               Padding(
                   padding: const EdgeInsets.only(
@@ -119,44 +162,44 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   )),
-              Container(
-                width: 460,
-                height: 200,
-                child: ListView.builder(
-                    itemCount: 3,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 140,
-                              height: 135,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage("assets/Rectangle16.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Lilbubblegum",
-                              style: TextStyle(
-                                  color: Color(0xff3A3A3A),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      );
-                    })),
+              Consumer(
+                builder: (context, SpotifyProvider artistAlbumProvider, child) =>artistAlbumProvider.isLoading==true?CircularProgressIndicator():
+               Container(
+                  width: 460,
+                  height: 200,
+                  child: ListView.builder(
+                      itemCount: artistalbProvider!.artistAlbumResponse.items!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 140,
+                                height: 135,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image:NetworkImage(artistAlbumProvider.artistAlbumResponse.items![index].images![0].url.toString()),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                artistAlbumProvider.artistAlbumResponse.items![index].name.toString(),
+                                style: TextStyle(
+                                    color: Color(0xff3A3A3A),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        );
+                      })),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 10),

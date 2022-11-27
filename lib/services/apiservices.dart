@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:spotifyapi/models/artist_album_response.dart';
+import 'package:spotifyapi/models/artist_response.dart';
 
 import 'package:spotifyapi/models/profils_response.dart';
 import 'package:spotifyapi/models/users_respnse.dart';
@@ -6,6 +8,51 @@ import 'package:spotifyapi/models/users_respnse.dart';
 
 
 import '../models/categories_response.dart';
+
+
+final Dio _dio5 = Dio(BaseOptions(
+  baseUrl: "https://api.spotify.com/v1/",
+  headers: {
+    "Authorization":
+        "Bearer BQA6IMI2srPugPd5UgBSGwhEx8IUn-rA2k9CzqyrexD7cX1bFug9Xz5njAPa3GNRYy_b5c55jk3XDJkELsGPZkAhf8Wk8g8J7l1Dtx4NjNco1lF98GIyPjIxvLjpa6syPNL0AZd-vQ2NN4__y9h2NPGofIXnN5bgPGOKGuxXYw7r4jsgaWnlJmzI5mxpJQK7g3WElKgCSSUKc-KkdYJVUPuX9xmRt16lM-asWff8nOHyYgQCJl50hLqAjJY97kKHafsfcvn_Kwe9nKDIQydSEOh746tYMce9lCrPtfsxFEEY"
+  },
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<ArtistResponse?> getCurrentArtistData() async {
+  ArtistResponse artistResponse;
+  try {
+    final response = await _dio5
+        .get("artists/0TnOYISbd1XYRBk9myaseg");
+    artistResponse = ArtistResponse.fromJson(response.data);
+
+    return artistResponse;
+  } catch (e) {}
+
+}
+
+
+final Dio _dio4 = Dio(BaseOptions(
+  baseUrl: "https://api.spotify.com/v1/",
+  headers: {
+    "Authorization":
+        "Bearer BQCck9F4eh7-dGh7KQOCgtjagwHuQgzBs4bS4DbSyQh8cCB9XGwdIJcLXfC9o2U_CS3xEmH9eggogKYFamXxdGHQDjHp3asmAAK24ZWJmLbbKdya20v18o3NQMJfRtFz3K7XeK-bMDvCdVV5zBuirNX_kU_HRQZKS64TVVZLd_mJy9tx0rJNrWmoWSlUG4arZZawYMPAhuEpS1elo9-YYnawWqJk_7KsvyryU-ON2S0z5VuZPH4h8Z_Y5Il7evLih8o6ElHvAnbOeti09Ub7VromnWKLDAOkvbVMcC_-UmCS"
+  },
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<ArtistAlbumResponse?> getCurrentArtistAlbumData() async {
+  ArtistAlbumResponse artistAlbumResponse;
+  try {
+    final response = await _dio4
+        .get("artists/0TnOYISbd1XYRBk9myaseg/albums?include_groups=single%2Cappears_on&market=TR&limit=10&offset=5");
+    artistAlbumResponse = ArtistAlbumResponse.fromJson(response.data);
+
+    return artistAlbumResponse;
+  } catch (e) {}
+
+}
+
 
 final Dio _dio = Dio(BaseOptions(
   baseUrl: "https://api.spotify.com/v1/",
@@ -16,7 +63,7 @@ final Dio _dio = Dio(BaseOptions(
   connectTimeout: 5000,
   receiveTimeout: 3000,
 ));
-Future<CategoriesResponse?> getCurrentData() async {
+Future<CategoriesResponse?> getCurrentCategoriesData() async {
   CategoriesResponse categoriesResponse;
   try {
     final response = await _dio
@@ -36,7 +83,7 @@ final Dio _dio3 = Dio(BaseOptions(
   connectTimeout: 5000,
   receiveTimeout: 3000,
 ));
-Future<ProfileResponse?> getCurrentData3() async {
+Future<ProfileResponse?> getCurrentProfileData() async {
   ProfileResponse profilesResponse;
   try {
     final response = await _dio3
@@ -56,7 +103,7 @@ final Dio _dio2 = Dio(BaseOptions(
   connectTimeout: 5000,
   receiveTimeout: 3000,
 ));
-Future<UserResponse?> getCurrentData2() async {
+Future<UserResponse?> getCurrentUserData() async {
   UserResponse usersResponse;
   try {
     final response = await _dio2

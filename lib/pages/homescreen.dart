@@ -19,15 +19,9 @@ class _HomescreenState extends State<Homescreen> {
   @override
      SpotifyProvider ?cateProvider;
   void initState(){
-     
-  
     cateProvider=Provider.of<SpotifyProvider>(context,listen:false);
       cateProvider!.getCategoryData(context);
-
-    
       super.initState();
-      
-
     }
   @override
   Widget build(BuildContext context) {
