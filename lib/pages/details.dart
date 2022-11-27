@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:spotifyapi/pages/homescreen.dart';
+import 'package:spotifyapi/utilities/convert_to_time.dart';
 
 import '../provider/spotify_provider.dart';
 
@@ -283,7 +284,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ],
                                   ),
                                   Text(
-                                    artistSongsProvider.artistSongResponse.tracks![index].durationMs.toString(),
+                                    ConvertToTime().milisecontToSecondAndMinute(artistSongsProvider.artistSongResponse.tracks![index].durationMs),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15,

@@ -4,7 +4,9 @@ import 'package:spotifyapi/models/artist_response.dart';
 import 'package:spotifyapi/models/artist_song_response.dart';
 
 import 'package:spotifyapi/models/categories_response.dart';
+import 'package:spotifyapi/models/new_releases_response.dart';
 import 'package:spotifyapi/models/profils_response.dart';
+import 'package:spotifyapi/models/track_response.dart';
 import 'package:spotifyapi/models/users_respnse.dart';
 
 
@@ -12,6 +14,8 @@ import 'package:spotifyapi/services/apiservices.dart';
 
 class SpotifyProvider with ChangeNotifier{
 
+  TrackResponse trackResponse=TrackResponse();
+  NewReleasesResponse newReleasesResponse=NewReleasesResponse();
   ArtistSongResponse artistSongResponse=ArtistSongResponse();
   ArtistResponse artistResponse=ArtistResponse();
   ArtistAlbumResponse artistAlbumResponse=ArtistAlbumResponse();
@@ -19,6 +23,20 @@ class SpotifyProvider with ChangeNotifier{
   CategoriesResponse categoryResponse= CategoriesResponse();
   ProfileResponse profileResponse=ProfileResponse();
   bool isLoading=false;
+
+  getTrackData(context) async {
+    isLoading=true;
+    trackResponse=(await getCurrentTrackData())!;
+    isLoading=false;
+    notifyListeners();
+  }
+
+  getNewReleasesData(context) async {
+    isLoading=true;
+    newReleasesResponse=(await getCurrentNewReleasesData())!;
+    isLoading=false;
+    notifyListeners();
+  }
 
 getArtistSongData(context) async {
     isLoading=true;
