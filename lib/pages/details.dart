@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -36,19 +37,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 children: [
                   Consumer(
                     builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.iLoadingartistResponse==true?CircularProgressIndicator():
-                     Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(artistProvider.artistResponse.images![0].url.toString()),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(69),
-                            bottomRight: Radius.circular(69),
-                          )),
-                    ),
+                     BounceInDown(
+                       child: Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(artistProvider.artistResponse.images![0].url.toString()),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(69),
+                              bottomRight: Radius.circular(69),
+                            )),
+                                         ),
+                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30,left: 15,right: 15),
@@ -169,42 +172,50 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   )),
               Consumer(
                 builder: (context, SpotifyProvider artistAlbumProvider, child) =>artistAlbumProvider.iLoadingartistAlbumResponse==true?CircularProgressIndicator():
-               Container(
-                  width: 460,
-                  height: 200,
-                  child: ListView.builder(
-                      itemCount: artistAlbumProvider.artistAlbumResponse.items!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 140,
-                                height: 135,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image:NetworkImage(artistAlbumProvider.artistAlbumResponse.items![index].images![0].url.toString()),
-                                      fit: BoxFit.fill,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30)),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                artistAlbumProvider.artistAlbumResponse.items![index].name.toString(),
-                                style: TextStyle(
-                                    color: Color(0xff3A3A3A),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        );
-                      })),
-                ),
+               FadeInLeft(
+                 child: Container(
+                    width: 460,
+                    height: 200,
+                    child: ListView.builder(
+                        itemCount: artistAlbumProvider.artistAlbumResponse.items!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 140,
+                                  height: 135,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:NetworkImage(artistAlbumProvider.artistAlbumResponse.items![index].images![0].url.toString()),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      borderRadius: BorderRadius.circular(30)),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 120,
+                                  height: 30,
+                                  child: Text(
+                                    artistAlbumProvider.artistAlbumResponse.items![index].name.toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        color: Color(0xff3A3A3A),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        })),
+                  ),
+               ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 10),

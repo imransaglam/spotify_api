@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -117,80 +118,82 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                  Consumer(
                    builder: (context, SpotifyProvider newReleaseProvider, child){
                     return newReleaseProvider.iLoadingnewReleasesResponse?CircularProgressIndicator():
-                    Container(
-                    width: 713,
-                    height: 280,
-                    child: ListView.builder(
-                     
-                        itemCount: newReleaseProvider.newReleasesResponse.albums?.items?.length,
-                        scrollDirection: Axis.horizontal,
-                         shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                     width: 160,
-                                     height:200 ,
-                                     //color: Colors.red,
+                    FadeInRight(
+                      child: Container(
+                      width: 713,
+                      height: 280,
+                      child: ListView.builder(
+                       
+                          itemCount: newReleaseProvider.newReleasesResponse.albums?.items?.length,
+                          scrollDirection: Axis.horizontal,
+                           shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                       width: 160,
+                                       height:200 ,
+                                       //color: Colors.red,
+                                      ),
+                                   newReleaseProvider.iLoadingnewReleasesResponse?CircularProgressIndicator() :  Container(
+                                      width: 147,
+                                      height: 185,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(newReleaseProvider.newReleasesResponse.albums!.items![index].images![0].url.toString()),
+                                            fit: BoxFit.cover,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                           30
+                                          )),
                                     ),
-                                 newReleaseProvider.iLoadingnewReleasesResponse?CircularProgressIndicator() :  Container(
-                                    width: 147,
-                                    height: 185,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(newReleaseProvider.newReleasesResponse.albums!.items![index].images![0].url.toString()),
-                                          fit: BoxFit.cover,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                         30
-                                        )),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 20,
+                                      child: Icon(Icons.play_circle_fill_rounded,color:Color(0xffE6E6E6),size: 40,))
+                                    ],
                                   ),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 20,
-                                    child: Icon(Icons.play_circle_fill_rounded,color:Color(0xffE6E6E6),size: 40,))
-                                  ],
-                                ),
-                              
-                               
-                                     Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                       child: Container(
-                                        height: 25,
-                                        width: 150,
-                                         child: Text(
-                                         newReleaseProvider.newReleasesResponse.albums!.items![index].name.toString(),
-                                         maxLines: 1,
-                                         overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                                                           ),
-                                       ),
-                                     ),
-                                  
                                 
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    newReleaseProvider.newReleasesResponse.albums!.items![index].artists![0].name.toString(),
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        })),
-                                 );
+                                 
+                                       Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                         child: Container(
+                                          height: 25,
+                                          width: 150,
+                                           child: Text(
+                                           newReleaseProvider.newReleasesResponse.albums!.items![index].name.toString(),
+                                           maxLines: 1,
+                                           overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                                                             ),
+                                         ),
+                                       ),
+                                    
+                                  
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      newReleaseProvider.newReleasesResponse.albums!.items![index].artists![0].name.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          })),
+                                   ),
+                    );
    } ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
