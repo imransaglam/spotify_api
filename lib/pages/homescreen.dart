@@ -60,18 +60,19 @@ class _HomescreenState extends State<Homescreen> {
 
 
                  Consumer(
-                  builder: (context, SpotifyProvider categoryProvider, child) =>categoryProvider.isLoading==true?CircularProgressIndicator(): 
+                  builder: (context, SpotifyProvider categoryProvider, child){
+                    return categoryProvider.iLoadingcategoryResponse==true?CircularProgressIndicator(): 
                   Container(
                     width: MediaQuery.of(context).size.width,
                     //height: MediaQuery.of(context).size.height,
-                     child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                     child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 3/2,
                       crossAxisCount: 2,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15,
                      ), 
                      physics: NeverScrollableScrollPhysics(),
-                     shrinkWrap: true,
+                    shrinkWrap: true,
                      itemCount: categoryProvider.categoryResponse.categories!.items!.length,
                      itemBuilder: (context, index) {
                        return Container(
@@ -87,8 +88,8 @@ class _HomescreenState extends State<Homescreen> {
                                     child: Text(categoryProvider.categoryResponse.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
                        );
                      },),
-                   ),
-                 ),
+                   );
+  }),
                  
              
 

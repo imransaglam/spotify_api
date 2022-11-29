@@ -75,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
                       child: Consumer(
-                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.iLoadingprofileResponse==true?CircularProgressIndicator():
                          Container(
                           width: 93,
                           height: 93,
@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Consumer(
-                      builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                      builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.iLoadingprofileResponse==true?CircularProgressIndicator():
                      Text(profileProvider.profileResponse.type.toString(),
                           style: TextStyle(
                               color: Color(0xff222222),
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Consumer(
-                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                        builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.iLoadingprofileResponse==true?CircularProgressIndicator():
                        Text(profileProvider.profileResponse.displayName.toString(),
                             style: TextStyle(
                                 color: Color(0xff222222),
@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Consumer(
-                       builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.isLoading==true?CircularProgressIndicator():
+                       builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.iLoadingprofileResponse==true?CircularProgressIndicator():
                       Text(profileProvider.profileResponse.followers!.total.toString(),
                           style: TextStyle(
                               color: Color(0xff222222),
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 15),
                 child: Consumer(
-                  builder:(context, SpotifyProvider userProvider, child) =>userProvider.isLoading==true?CircularProgressIndicator():
+                  builder:(context, SpotifyProvider userProvider, child) =>userProvider.iLoadinguserResponse==true?CircularProgressIndicator():
                    Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,

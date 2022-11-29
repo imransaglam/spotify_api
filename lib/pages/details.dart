@@ -35,7 +35,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Stack(
                 children: [
                   Consumer(
-                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.iLoadingartistResponse==true?CircularProgressIndicator():
                      Container(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
@@ -76,7 +76,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: Consumer(
-                  builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                  builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.iLoadingartistResponse==true?CircularProgressIndicator():
                  Container(
                       alignment: Alignment.center,
                       child: Text(
@@ -89,7 +89,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Consumer(
-                builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.iLoadingartistResponse==true?CircularProgressIndicator():
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -115,7 +115,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 60, right: 60),
                   child: Consumer(
-                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.isLoading==true?CircularProgressIndicator():
+                    builder: (context, SpotifyProvider artistProvider, child) =>artistProvider.iLoadingartistResponse==true?CircularProgressIndicator():
                      Container(
                       alignment: Alignment.center,
                       child: Row(
@@ -168,7 +168,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         fontWeight: FontWeight.bold),
                   )),
               Consumer(
-                builder: (context, SpotifyProvider artistAlbumProvider, child) =>artistAlbumProvider.isLoading==true?CircularProgressIndicator():
+                builder: (context, SpotifyProvider artistAlbumProvider, child) =>artistAlbumProvider.iLoadingartistAlbumResponse==true?CircularProgressIndicator():
                Container(
                   width: 460,
                   height: 200,
@@ -232,7 +232,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 height: 10,
               ),
               Consumer(
-           builder: (context, SpotifyProvider artistSongsProvider, child) =>artistSongsProvider.isLoading==true?CircularProgressIndicator():
+           builder: (context, SpotifyProvider artistSongsProvider, child) =>artistSongsProvider.iLoadingartistSongResponse==true?CircularProgressIndicator():
                  Container(
                   width:MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,

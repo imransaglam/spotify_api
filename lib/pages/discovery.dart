@@ -115,13 +115,16 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                   ),
                 ),
                  Consumer(
-                   builder: (context, SpotifyProvider newReleaseProvider, child) =>newReleaseProvider.isLoading==true?CircularProgressIndicator(): 
+                   builder: (context, SpotifyProvider newReleaseProvider, child){
+                    return newReleaseProvider.iLoadingnewReleasesResponse?CircularProgressIndicator():
                     Container(
                     width: 713,
                     height: 280,
                     child: ListView.builder(
-                        itemCount: newReleaseProvider.newReleasesResponse.albums!.items!.length,
+                     
+                        itemCount: newReleaseProvider.newReleasesResponse.albums?.items?.length,
                         scrollDirection: Axis.horizontal,
+                         shrinkWrap: true,
                         itemBuilder: ((context, index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -135,7 +138,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                                      height:200 ,
                                      //color: Colors.red,
                                     ),
-                                    Container(
+                                 newReleaseProvider.iLoadingnewReleasesResponse?CircularProgressIndicator() :  Container(
                                     width: 147,
                                     height: 185,
                                     decoration: BoxDecoration(
@@ -187,8 +190,8 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                             ),
                           );
                         })),
-                                 ),
-                 ),
+                                 );
+   } ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                   child: Row(
@@ -215,13 +218,14 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                   height: 10,
                 ),
                 Consumer(
-                    builder: (context, SpotifyProvider trackProvider, child) =>trackProvider.isLoading==true?CircularProgressIndicator():
+                    builder: (context, SpotifyProvider trackProvider, child) =>trackProvider.iLoadingtrackResponse==true?CircularProgressIndicator():
                    Container(
                     width: 460,
                     height: MediaQuery.of(context).size.height,
                     child: ListView.builder(
+                      shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: trackProvider.trackResponse.artists!.length,
+                        itemCount: trackProvider.trackResponse.artists?.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: ((context, index) {
                           return Padding(
@@ -243,7 +247,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            trackProvider.trackResponse.album!.name.toString(),
+                                            trackProvider.trackResponse.album!.name!,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,

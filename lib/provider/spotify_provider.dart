@@ -22,62 +22,79 @@ class SpotifyProvider with ChangeNotifier{
   UserResponse userResponse= UserResponse();
   CategoriesResponse categoryResponse= CategoriesResponse();
   ProfileResponse profileResponse=ProfileResponse();
-  bool isLoading=false;
+
+
+  
+
+  bool iLoadingtrackResponse=true;
+  bool iLoadingnewReleasesResponse=true;
+  bool iLoadingartistSongResponse=true;
+  bool iLoadingartistResponse=true;
+  bool iLoadingartistAlbumResponse=true;
+  bool iLoadinguserResponse=true;
+  bool iLoadingcategoryResponse=true;
+  bool iLoadingprofileResponse=true;
+
+  
+
+
+
 
   getTrackData(context) async {
-    isLoading=true;
+    iLoadingtrackResponse=true;
     trackResponse=(await getCurrentTrackData())!;
-    isLoading=false;
+    iLoadingtrackResponse=false;
     notifyListeners();
   }
 
   getNewReleasesData(context) async {
-    isLoading=true;
+    iLoadingnewReleasesResponse=true;
     newReleasesResponse=(await getCurrentNewReleasesData())!;
-    isLoading=false;
+    iLoadingnewReleasesResponse=false;
     notifyListeners();
   }
 
 getArtistSongData(context) async {
-    isLoading=true;
+    iLoadingartistSongResponse=true;
     artistSongResponse=(await getCurrentArtistSongData())!;
-    isLoading=false;
+    iLoadingartistSongResponse=false;
     notifyListeners();
   }
 
 
  getArtistData(context) async {
-    isLoading=true;
+    iLoadingartistResponse=true;
     artistResponse=(await getCurrentArtistData())!;
-    isLoading=false;
+    iLoadingartistResponse=false;
     notifyListeners();
   }
 
  getArtistAlbumData(context) async {
-    isLoading=true;
+    iLoadingartistAlbumResponse=true;
     artistAlbumResponse=(await getCurrentArtistAlbumData())!;
-    isLoading=false;
+    iLoadingartistAlbumResponse=false;
     notifyListeners();
   }
 
   getCategoryData(context) async {
-    isLoading=true;
+    iLoadingcategoryResponse=true;
     categoryResponse=(await getCurrentCategoriesData())!;
-    isLoading=false;
+    iLoadingcategoryResponse=false;
     notifyListeners();
   }
 
   getProfileData(context) async {
-    isLoading=true;
+    iLoadingprofileResponse=true;
     profileResponse=(await getCurrentProfileData())!;
-    isLoading=false;
+    iLoadingprofileResponse=false;
+
     notifyListeners();
   }
    getUserData(context) async {
-    isLoading=true;
+    iLoadinguserResponse=true;
     userResponse=(await getCurrentUserData())!;
     //print(userResponse.href.toString());
-    isLoading=false;
+    iLoadinguserResponse=false;
     notifyListeners();
   }
 
