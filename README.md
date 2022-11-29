@@ -1,16 +1,7 @@
-# spotifyapi
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_1669582279](https://user-images.githubusercontent.com/108897583/204159946-23371d4c-2946-4954-8f1b-a689bad1fef4.png)
+![Screenshot_1669483896](https://user-images.githubusercontent.com/108897583/204159953-727a55ef-bc4c-4a28-b0d7-918be1cc6956.png)
+![Screenshot_1669484420](https://user-images.githubusercontent.com/108897583/204159957-bae15ed8-fcf3-47ef-b2f4-ad697c0cadcb.png)
+![Screenshot_1669578495](https://user-images.githubusercontent.com/108897583/204159972-2cf0202e-b0a9-4d9c-842d-0f9339094432.png)
+![Screenshot_1669578515](https://user-images.githubusercontent.com/108897583/204159983-ee4328bf-1d0f-4b11-b1d3-ae5d29db932a.png)
+![Screenshot_1669578522](https://user-images.githubusercontent.com/108897583/204159991-19ab066e-47f3-428d-8676-2d95cee6c7c8.png)
+![Screenshot_1669582270](https://user-images.githubusercontent.com/108897583/204159992-db6830ec-cad7-4dcd-9003-af73d6bc65b2.png)
