@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -76,16 +77,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
                       child: Consumer(
                         builder:(context, SpotifyProvider profileProvider, child) =>profileProvider.iLoadingprofileResponse==true?CircularProgressIndicator():
-                         Container(
-                          width: 93,
-                          height: 93,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(profileProvider.profileResponse.images![0].url.toString()),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(46.5
-                              )),
-                        ),
+                         FadeIn(
+                           child: Container(
+                            width: 93,
+                            height: 93,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(profileProvider.profileResponse.images![0].url.toString()),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(46.5
+                                )),
+                                                 ),
+                         ),
                       ),
                     ),
                     Consumer(

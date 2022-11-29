@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -34,7 +35,7 @@ class _HomescreenState extends State<Homescreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Ara",style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                Text("Ara",style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),),
                 SizedBox(height: 10,),
                  SizedBox(
                   height: 50,
@@ -54,7 +55,7 @@ class _HomescreenState extends State<Homescreen> {
                                ),
                  ),
                 SizedBox(height: 10,),
-                 Center(child: Text("Hepsine göz at",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+                 Center(child: Text("Hepsine göz at",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
                 SizedBox(height: 10,),
 
 
@@ -62,33 +63,35 @@ class _HomescreenState extends State<Homescreen> {
                  Consumer(
                   builder: (context, SpotifyProvider categoryProvider, child){
                     return categoryProvider.iLoadingcategoryResponse==true?CircularProgressIndicator(): 
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    //height: MediaQuery.of(context).size.height,
-                     child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 3/2,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15,
-                     ), 
-                     physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                     itemCount: categoryProvider.categoryResponse.categories!.items!.length,
-                     itemBuilder: (context, index) {
-                       return Container(
-                                   height: 80,
-                                   width: 80,
-                                  decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image:  NetworkImage(categoryProvider.categoryResponse.categories!.items![index].icons![0].url.toString()),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                                   child: Container(alignment: Alignment.bottomCenter,
-                                    child: Text(categoryProvider.categoryResponse.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
-                       );
-                     },),
-                   );
+                  BounceInLeft(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      //height: MediaQuery.of(context).size.height,
+                       child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 3/2,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                       ), 
+                       physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                       itemCount: categoryProvider.categoryResponse.categories!.items!.length,
+                       itemBuilder: (context, index) {
+                         return Container(
+                                     height: 80,
+                                     width: 80,
+                                    decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:  NetworkImage(categoryProvider.categoryResponse.categories!.items![index].icons![0].url.toString()),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
+                                     child: Container(alignment: Alignment.bottomCenter,
+                                      child: Text(categoryProvider.categoryResponse.categories!.items![index].name.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)),
+                         );
+                       },),
+                     ),
+                  );
   }),
                  
              
